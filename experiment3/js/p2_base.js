@@ -76,6 +76,7 @@ function setup() {
 function draw() {
   randomSeed(seed);
   drawGrid(currentGrid);
+  // noLoop();
 }
 
 function placeTile(i, j, ti, tj) {

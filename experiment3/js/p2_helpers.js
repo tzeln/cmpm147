@@ -9,7 +9,7 @@ function generateGrid(numCols, numRows) {
     for (let i = 0; i < numRows; i++) {
       let row = [];
       for (let j = 0; j < numCols; j++) {
-        let x = floor(random(100));
+        let x = floor(random(80));
         if (x == 0 && count < 7) {
           row.push(".");
           rooms.push([i, j]);
@@ -20,23 +20,43 @@ function generateGrid(numCols, numRows) {
       }
       grid.push(row);
     }
-    generateRoom(grid, rooms, numCols, numRows, count);
+    generateRoom(grid, rooms, count);
     return grid;
   }
   
-  function generateRoom(grid, rooms, cols, rows, count) {
-    for (let x = 0; x < count-1; x+=2) {
-      var [x1, y1] = rooms[x];
-      var [x2, y2] = rooms[x+1];
-      console.log(x1, x2);
-      console.log(y1, y2);
-      for (let i = x1; i < x2; i++) {
-        for (let j = y1; j < y2; j++) {
-          grid[i][j] = ".";
-          // console.log(grid[i][j]);
-          console.log("got here");
-        }  
-      }
+  function generateRoom(grid, rooms, count) {
+    console.log(rooms);
+    // generates one big room first
+    for (let x = 0; x < count-1; x++) {
+        var [x1, y1] = rooms[x];
+        var [x2, y2] = rooms[x+1];
+        if (x1 == x2) {
+            for (let j = y1; j < y2; j++) {
+                grid[x1][j] = ".";
+                let chest = floor(random(30));
+                if (chest == 0) {
+                    grid[x1][j] = "1";
+                }
+            }
+        } else if (y1 == y2) {
+            for (let i = x1; i < x2; i++) {
+                grid[i][y1] = ".";
+                let chest = floor(random(30));
+                if (chest == 0) {
+                    grid[i][y1] = "1";
+                }
+            } 
+        } else {
+            for (let i = x1; i < x2; i++) {
+                for (let j = y1; j < y2; j++) {
+                    grid[i][j] = ".";
+                    let chest = floor(random(70));
+                    if (chest == 0) {
+                        grid[i][j] = "1";
+                    }
+                }  
+            }
+        }
     }
   }
   
@@ -44,7 +64,6 @@ function generateGrid(numCols, numRows) {
     if (i < 0 || j < 0 || i >= grid.length || j >= grid[0].length) {
       return 0;
     }
-  
     return grid[i][j] === target ? 1 : 0;
   }
   
@@ -55,57 +74,53 @@ function generateGrid(numCols, numRows) {
     var westBit = gridCheck(grid, i, j - 1, target);
   
     var code = (northBit << 0) + (southBit << 1) + (eastBit << 2) + (westBit << 3);
-    console.log(code);
     return code;
   }
   
   
   function drawContext(grid, i, j, target, dti, dtj) {
     var code = gridCode(grid, i, j, target);  
-    const [tiOffset, tjOffset] = lookup[code];  
+    var [tiOffset, tjOffset] = lookup[code]; 
+    if (code == 15) {
+        tiOffset += floor(random(3));
+    }
     placeTile(i, j, dti + tiOffset, dtj + tjOffset);
   }
   
   
   function drawGrid(grid) {
+    // background("fff1e8");
     background(128);
     for(let i = 0; i < grid.length; i++) {
       for(let j = 0; j < grid[i].length; j++) {
         if (gridCheck(grid, i, j, "_")) {
-          placeTile(i, j, floor(random(4)), 13);
+            placeTile(i, j, floor(random(4)), 3);
+        } else if (gridCheck(grid, i, j, "1")) {
+            placeTile(i, j, floor(random(6)), 28);
         } else {
-          drawContext(grid, i, j, ".", 5, 13);
+            drawContext(grid, i, j, ".", 0, 0);
         }
       }
     }
   }
   
   const lookup = [
-    [0, 0],   
-    [0, 1],   
-    [0, -1],  
-    [-1, 0],  
-    [1, 0],   
-    [1, 1],   
-    [1, -1],  
-    [-1, 1],  
-    [-1, -1], 
-    [0, 2],   
-    [0, -2],  
-    [-2, 0],  
-    [2, 0],   
-    [2, 1],   
-    [2, -1],  
-    [-2, 1],  
-    [-2, -1], 
-    [1, 2],   
-    [1, -2],  
-    [-1, 2],  
-    [-1, -2], 
-    [2, 2],   
-    [2, -2],  
-    [-2, 2],  
-    [-2, -2]  
+    [2, 23],    // 0:  0000
+    [2, 23],    // 1:  0001 (N)
+    [2, 23],    // 2:  0010 (S)
+    [2, 23],    // 3:  0011 (SN)
+    [2, 23],    // 4:  0100 (E)
+    [2, 23],    // 5:  0101 (EN)
+    [2, 23],    // 6:  0110 (ES)
+    [2, 23],    // 7:  0111 (ESN)
+    [2, 23],    // 8:  1000 (W)
+    [2, 23],    // 9:  1001 (WN)
+    [2, 23],    // 10: 1010 (WS)
+    [2, 23],    // 11: 1011 (WSN)
+    [2, 23],    // 12: 1100 (WE)
+    [2, 23],    // 13: 1101 (WEN)
+    [2, 23],    // 14: 1110 (WES)
+    [1, 15],    // 15: 1111 (WESN)
   ];
   
   
