@@ -50,6 +50,7 @@ function generateGrid(numCols, numRows) {
             for (let i = x1; i < x2; i++) {
                 for (let j = y1; j < y2; j++) {
                     grid[i][j] = ".";
+                    // console.log(i, j);
                     let chest = floor(random(70));
                     if (chest == 0) {
                         grid[i][j] = "1";
