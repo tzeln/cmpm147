@@ -53,38 +53,46 @@ function p3_drawBefore() {
 function p3_drawTile(i, j) {
   noStroke();
   let tileHash = XXH.h32("tile:" + [i, j], worldSeed).toNumber();
-  let height = (tileHash % 8 + 1) * 10;
+  let height = (tileHash % 8 + 1) * 40;
 
   switch (tileHash % 8) {
     case 7: 
-      fill(100, 200);
+      fill(10, 100, 20, 150);
       break;
     case 6: 
-      fill(120, 200);
+      fill(10, 120, 20, 150);
       break;
     case 5: 
-      fill(140, 200);
+      fill(10, 140, 20, 150);
       break;
     case 4: 
-      fill(160, 200);
+      fill(10, 160, 20, 150);
       break;
     case 3: 
-      fill(180, 200);
+      fill(10, 180, 20, 150);
       break;
     case 2:
     case 1:
     case 0:
-      fill(255, 200);
+      fill(60, 255, 60, 150);
+      height = 20; 
   }
 
   push();
 
-  beginShape();
-  vertex(-tw, 0, height);
-  vertex(0, th, height);
-  vertex(tw, 0, height);
-  vertex(0, -th, height);
-  endShape(CLOSE);
+  let size = abs(sin(frameCount * 0.05)) * 10 + 20; // Size oscillates from 20 to 120
+  box(size);
+  box(tw, th, height+size);
+  // beginShape();
+  // vertex(-tw, 0, height);
+  // vertex(0, th, height);
+  // vertex(tw, 0, height);
+  // vertex(0, -th, height);
+  // vertex(-tw, 0, height);
+  // vertex(0, th, height);
+  // vertex(tw, 0, height);
+  // vertex(0, -th, height);
+  // endShape(CLOSE);
 
   let n = clicks[[i, j]] | 0;
   if (n % 2 == 1) {
