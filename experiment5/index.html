@@ -77,14 +77,18 @@
 			<div class="minor-section">
 				<h2>Description</h2>
 				<p>
-                    
+                    Multiple different images can be selected to display a colorizing effect. 
+                    With good results, the active image should be reminiscent of a mosaic of sorts.
+                    All requirements are met for this assignment.  
                 </p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
                 <p>
-
+                    In order to get color from the original inspiration, I used image.get(x,y) and made alterations to the bounds to always sample the middle of the randomly generated rectangle. 
+                    Additionally, instead of picking random spots within the canvas, I pick random spots within intervals of the canvas in hopes of increasing the accuracy of the final image. 
+                    To make sure there's less color variation in each generation, I've lowered the possible standard deviation in the function colorMut. 
                 </p>>
 			</div>
 
@@ -97,7 +101,9 @@
 			<div class="minor-section">
 				<h2>Reflection</h2>
 				<p>
-
+                    Honestly the best assignment I've had so far, I just wish the results were a bit better. I'm unsure how to actually achieve those results without 
+                    actually making some sort of image parsing function that recognizes points of high interest/contrast though and emphasizes that they are 
+                    accurate in separate generations.
                 </p>
 			</div>
 
