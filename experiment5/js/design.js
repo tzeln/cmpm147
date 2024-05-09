@@ -9,6 +9,11 @@ function getInspirations() {
         credit: "tomosaki @twitter"
       },
       {
+        name: "Summer Evening (2)",
+        assetUrl: "https://pbs.twimg.com/media/E5cVFrcVUAQooUu?format=jpg&name=large",
+        credit: "tomosaki @twitter"
+      },
+      {
         name: "Uni Punch", 
         assetUrl: "https://pbs.twimg.com/media/GM5ek27awAAsXbm?format=jpg&name=large",
         credit: "unicouni3 @twitter"
@@ -118,8 +123,6 @@ function mut(num, min, max, rate) {
 }   
 
 function colorMut(num, min, max, rate) {
-    // if (num > 200 && rate < 50) {
-    //     return constrain(randomGaussian(num, (10 * (max - min)) / 10), 100, max);
-    // }
-    return constrain(randomGaussian(num, (rate * (max - min)) / 15), min, max);
+    // smaller std dev
+    return constrain(randomGaussian(num, (rate * (max - min)) / 20), min, max);
 }
